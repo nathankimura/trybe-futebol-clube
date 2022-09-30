@@ -6,6 +6,6 @@ export default class AuthController {
 
   public login = async (req: Request, res: Response): Promise<Response> => {
     const token = await this.authService.token(req.body);
-    return res.status(200).json(token);
+    return res.status(200).json({ token });
   };
 }
