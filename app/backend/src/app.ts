@@ -1,4 +1,9 @@
 import * as express from 'express';
+import AuthController from './controllers/AuthController';
+import AuthMiddleware from './middlewares/AuthMiddleware';
+
+const authController = new AuthController();
+const authMiddleware = new AuthMiddleware();
 
 class App {
   public app: express.Express;
@@ -10,6 +15,7 @@ class App {
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.app.post('/login', authMiddleware.validate, authController.login);
   }
 
   private config():void {
