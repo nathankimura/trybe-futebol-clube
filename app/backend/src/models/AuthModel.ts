@@ -10,7 +10,6 @@ export default class AuthModel {
   public token = async (email: string): Promise<IToken> => {
     const jwtConfig = { expiresIn: '1d' };
     const user = await this.model.findOne({ where: { email }, raw: true }) as IUser;
-
     const token = Jwt.sign({ userId: user.id }, JWT_SECRET, jwtConfig);
     return token as unknown as IToken;
   };
