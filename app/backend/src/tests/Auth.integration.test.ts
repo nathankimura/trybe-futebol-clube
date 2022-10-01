@@ -37,6 +37,7 @@ describe('/clinics', () => {
       const response = await chai.request(app).post('/login').send(dumpUserRequest);
       // console.log(response);
       
+      
       chai.expect(response.status).to.equal(200);
       chai.expect(response.body).to.have.property('token');
     });
