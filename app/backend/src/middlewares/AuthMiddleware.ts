@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as bcrypt from 'bcryptjs';
-import IUser from '../models/IUser';
+import IUser from '../interfaces/IUser';
 import User from '../database/models/user';
 
 export default class AuthMiddleware {

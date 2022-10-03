@@ -2,10 +2,12 @@ import * as express from 'express';
 import AuthController from './controllers/AuthController';
 import AuthMiddleware from './middlewares/AuthMiddleware';
 import ValidateJWT from './controllers/ValidateJWT';
+import TeamController from './controllers/TeamController';
 
 const authController = new AuthController();
 const authMiddleware = new AuthMiddleware();
 const validateJwt = new ValidateJWT();
+const teamController = new TeamController();
 
 class App {
   public app: express.Express;
@@ -19,6 +21,8 @@ class App {
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.app.post('/login', authMiddleware.validate, authController.login);
     this.app.get('/login/validate', validateJwt.validateJWT);
+    this.app.get('/teams', teamController.getAll);
+    this.app.get('/teams/:id', teamController.getById);
   }
 
   private config():void {
