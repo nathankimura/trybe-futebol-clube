@@ -1,3 +1,4 @@
+import ICreateMatch from '../interfaces/ICreateMatch';
 import MatchModel from '../models/MatchModel';
 
 export default class MatchService {
@@ -13,6 +14,11 @@ export default class MatchService {
       return matches;
     }
     const matches = await this.matchModel.getQuery('0');
+    return matches;
+  };
+
+  public createMatch = async (obj: ICreateMatch) => {
+    const matches = await this.matchModel.createMatch(obj);
     return matches;
   };
 }

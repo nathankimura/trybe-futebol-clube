@@ -12,4 +12,10 @@ export default class MatchController {
     const matches = await this.matchService.getQuery(query as unknown as string);
     return res.status(200).json(matches);
   };
+
+  public createMatch = async (req: Request, res: Response): Promise<Response> => {
+    const params = req.body;
+    const matches = await this.matchService.createMatch(params);
+    return res.status(201).json(matches);
+  };
 }

@@ -1,6 +1,7 @@
 import Team from '../database/models/team';
 import IMatch from '../interfaces/IMatch';
 import Match from '../database/models/match';
+import ICreateMatch from '../interfaces/ICreateMatch';
 
 export default class MatchModel {
   public matchModel = Match;
@@ -39,9 +40,8 @@ export default class MatchModel {
     return matches as unknown as IMatch[];
   };
 
-/*   public updateInprogress = async (query: string): Promise<IMatch[]> => {
-    const matches = await this.matchModel.update({ where: { inProgress: query },
-    });
-    return matches as unknown as IMatch[];
-  }; */
+  public createMatch = async (obj: ICreateMatch): Promise<ICreateMatch> => {
+    const matches = await this.matchModel.create(obj);
+    return matches as unknown as ICreateMatch;
+  };
 }
