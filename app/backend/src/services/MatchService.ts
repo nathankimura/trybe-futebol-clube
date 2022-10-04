@@ -21,4 +21,8 @@ export default class MatchService {
     const matches = await this.matchModel.createMatch(obj);
     return matches;
   };
+
+  public finishMatch = async (id: number) => {
+    await this.matchModel.finishMatch(id);
+  };
 }

@@ -44,4 +44,11 @@ export default class MatchModel {
     const matches = await this.matchModel.create(obj);
     return matches as unknown as ICreateMatch;
   };
+
+  public finishMatch = async (id: number) => {
+    await this.matchModel.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+  };
 }
