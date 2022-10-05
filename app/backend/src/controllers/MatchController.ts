@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { decode } from 'jsonwebtoken';
 import ICreateMatch from '../interfaces/ICreateMatch';
 import MatchService from '../services/MatchService';
 
@@ -16,6 +17,13 @@ export default class MatchController {
 
   public createMatch = async (req: Request, res: Response): Promise<Response> => {
     const params = req.body as ICreateMatch;
+    const token = req.headers.authorization;
+    const validateToken = decode(token as string);
+    if (!token) {
+      return res.status(404)
+        .json({ message: 'Token not found' });
+    }
+    if (!validateToken) return res.status(401).json({ message: 'Token must be a valid token' });
     const matches = await this.matchService.createMatch(params);
     return res.status(201).json(matches);
   };
