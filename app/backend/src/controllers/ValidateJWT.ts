@@ -14,6 +14,6 @@ export default class ValidateJWT {
     const { userId } = decoded;
     const user = await this.model.findOne({ where: { id: userId }, raw: true }) as IUser;
     const { role } = user;
-    return res.status(200).json({ role });
+    return res.status(200).json({ role, decoded });
   };
 }

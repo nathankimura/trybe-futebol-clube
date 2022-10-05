@@ -1,12 +1,16 @@
 import * as express from 'express';
 import AuthController from './controllers/AuthController';
 import AuthMiddleware from './middlewares/AuthMiddleware';
+import CreateMiddleware from './middlewares/CreateMiddleware';
+// import TokenValidateMiddleware from './middlewares/TokenValidateMiddleware';
 import ValidateJWT from './controllers/ValidateJWT';
 import TeamController from './controllers/TeamController';
 import MatchController from './controllers/MatchController';
 
 const authController = new AuthController();
 const authMiddleware = new AuthMiddleware();
+const createMiddleware = new CreateMiddleware();
+// const tokenValidateMiddleware = new TokenValidateMiddleware();
 const validateJwt = new ValidateJWT();
 const teamController = new TeamController();
 const matchController = new MatchController();
@@ -26,7 +30,11 @@ class App {
     this.app.get('/teams', teamController.getAll);
     this.app.get('/teams/:id', teamController.getById);
     this.app.get('/matches', matchController.getAll);
-    this.app.post('/matches', matchController.createMatch);
+    this.app.post(
+      '/matches',
+      createMiddleware.validateCreate,
+      matchController.createMatch,
+    );
     this.app.patch('/matches/:id/finish', matchController.finishMatch);
   }
 

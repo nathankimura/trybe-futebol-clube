@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import ICreateMatch from '../interfaces/ICreateMatch';
 import MatchService from '../services/MatchService';
 
 export default class MatchController {
@@ -14,7 +15,7 @@ export default class MatchController {
   };
 
   public createMatch = async (req: Request, res: Response): Promise<Response> => {
-    const params = req.body;
+    const params = req.body as ICreateMatch;
     const matches = await this.matchService.createMatch(params);
     return res.status(201).json(matches);
   };
