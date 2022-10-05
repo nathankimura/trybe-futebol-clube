@@ -34,6 +34,7 @@ class App {
       matchController.createMatch,
     );
     this.app.patch('/matches/:id/finish', matchController.finishMatch);
+    this.app.patch('/matches/:id', matchController.attOngoingMatches);
   }
 
   private config():void {

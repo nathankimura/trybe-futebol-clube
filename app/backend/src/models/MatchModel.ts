@@ -1,5 +1,6 @@
 import Team from '../database/models/team';
 import IMatch from '../interfaces/IMatch';
+import IOngoing from '../interfaces/IOngoing';
 import Match from '../database/models/match';
 import ICreateMatch from '../interfaces/ICreateMatch';
 
@@ -48,6 +49,15 @@ export default class MatchModel {
   public finishMatch = async (id: number) => {
     await this.matchModel.update(
       { inProgress: false },
+      { where: { id } },
+    );
+  };
+
+  public attOngoingMatches = async (id: number, body:IOngoing) => {
+    await this.matchModel.update(
+      { homeTeamGoals: body.homeTeamGoals,
+        awayTeamGoals: body.awayTeamGoals,
+      },
       { where: { id } },
     );
   };

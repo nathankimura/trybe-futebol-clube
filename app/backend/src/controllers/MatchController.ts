@@ -33,4 +33,11 @@ export default class MatchController {
     await this.matchService.finishMatch(id);
     return res.status(200).json({ message: 'Finished' });
   };
+
+  public attOngoingMatches = async (req: Request, res: Response): Promise<Response> => {
+    const id = +req.params.id;
+    const { body } = req;
+    await this.matchService.attOngoingMatches(id, body);
+    return res.status(200).json({ body });
+  };
 }

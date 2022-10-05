@@ -1,4 +1,5 @@
 import ICreateMatch from '../interfaces/ICreateMatch';
+import IOngoing from '../interfaces/IOngoing';
 import MatchModel from '../models/MatchModel';
 
 export default class MatchService {
@@ -24,5 +25,9 @@ export default class MatchService {
 
   public finishMatch = async (id: number) => {
     await this.matchModel.finishMatch(id);
+  };
+
+  public attOngoingMatches = async (id: number, body:IOngoing) => {
+    await this.matchModel.attOngoingMatches(id, body);
   };
 }
