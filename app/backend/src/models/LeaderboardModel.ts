@@ -10,24 +10,29 @@ export default class TeamModel {
 
   constructor(private leaderboardUtils = new LeaderboardUtils()) {}
 
-  public getAllTest = async (): Promise<ILeaderboard[]> => {
+  public getTeamsTest = async () => {
+    const teams = await this.leaderboardUtils.getTeamsData();
+    return teams;
+  };
+
+  public getAllTest = async (homeOrAway: string): Promise<ILeaderboard[]> => {
     const teams = await this.leaderboardUtils.getTeamsData();
     const format = this.leaderboardUtils;
     const formatTeams = teams.map((team: ILeaderboardTest) => ({ name: team.teamName,
-      totalPoints: format.calcHomePoints(team),
-      totalGames: team.homeMatches.length,
-      totalVictories: format.calcHomeVictories(team),
-      totalDraws: format.calcHomeDraws(team),
-      totalLosses: format.calcHomeLosses(team),
-      goalsFavor: format.calcGoalsFavor(team),
-      goalsOwn: format.calcGoalsOwn(team),
-      goalsBalance: format.calcGoalsBalance(team),
-      efficiency: format.calcHomeEfficiency(team) }));
+      totalPoints: format.calcHomePoints(team, homeOrAway),
+      totalGames: (homeOrAway === 'home') ? team.homeMatches.length : team.awayMatches.length,
+      totalVictories: format.calcHomeVictories(team, homeOrAway),
+      totalDraws: format.calcHomeDraws(team, homeOrAway),
+      totalLosses: format.calcHomeLosses(team, homeOrAway),
+      goalsFavor: format.calcGoalsFavor(team, homeOrAway),
+      goalsOwn: format.calcGoalsOwn(team, homeOrAway),
+      goalsBalance: format.calcGoalsBalance(team, homeOrAway),
+      efficiency: format.calcHomeEfficiency(team, homeOrAway) }));
     return formatTeams;
   };
 
-  public orderTeams = async (): Promise<ILeaderboard[]> => {
-    const teams = await this.getAllTest();
+  public orderTeams = async (homeOrAway: string): Promise<ILeaderboard[]> => {
+    const teams = await this.getAllTest(homeOrAway);
     const order = teams.sort((a: ILeaderboard, b: ILeaderboard) => b.totalPoints - a.totalPoints
     || b.totalVictories - a.totalVictories
     || b.goalsBalance - a.goalsBalance

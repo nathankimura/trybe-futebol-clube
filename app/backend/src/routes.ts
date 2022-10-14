@@ -30,5 +30,8 @@ router.post(
 router.patch('/matches/:id/finish', matchController.finishMatch);
 router.patch('/matches/:id', matchController.attOngoingMatches);
 router.get('/leaderboard/home', leaderboardController.getHomeTeams);
+router.get('/leaderboard/away', leaderboardController.getAwayTeams);
+router.get('/leaderboard', leaderboardController.getTeams);
+router.get('/leaderboard/test', leaderboardController.getTeamsTest);
 
 export default router;
