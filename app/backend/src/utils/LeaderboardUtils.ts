@@ -27,7 +27,7 @@ export default class LeaderboardUtils {
     return teams as unknown as ILeaderboardTest[];
   };
 
-  public calcHomePoints = (teamObj:ILeaderboardTest, homeOrAway: string) => {
+  public calcHomePoints = (teamObj:ILeaderboardTest, homeAwayOrAll: string) => {
     const homePoints = teamObj.homeMatches.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals > curr.awayTeamGoals) { return acc + 3; }
       if (curr.homeTeamGoals === curr.awayTeamGoals) { return acc + 1; }
@@ -39,13 +39,15 @@ export default class LeaderboardUtils {
       return acc + 0;
     }, 0);
 
-    if (homeOrAway === 'home') {
+    if (homeAwayOrAll === 'home') {
       return homePoints;
+    } if (homeAwayOrAll === 'away') {
+      return awayPoints;
     }
-    return awayPoints;
+    return homePoints + awayPoints;
   };
 
-  public calcHomeVictories = (teamObj:ILeaderboardTest, homeOrAway: string) => {
+  public calcHomeVictories = (teamObj:ILeaderboardTest, homeAwayOrAll: string) => {
     const homeVictories = teamObj.homeMatches.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals > curr.awayTeamGoals) { return acc + 1; }
       return acc + 0;
@@ -56,13 +58,15 @@ export default class LeaderboardUtils {
       return acc + 0;
     }, 0);
 
-    if (homeOrAway === 'home') {
+    if (homeAwayOrAll === 'home') {
       return homeVictories;
+    } if (homeAwayOrAll === 'away') {
+      return awayVictories;
     }
-    return awayVictories;
+    return homeVictories + awayVictories;
   };
 
-  public calcHomeDraws = (teamObj:ILeaderboardTest, homeOrAway: string) => {
+  public calcHomeDraws = (teamObj:ILeaderboardTest, homeAwayOrAll: string) => {
     const homeDraws = teamObj.homeMatches.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals === curr.awayTeamGoals) { return acc + 1; }
       return acc + 0;
@@ -73,13 +77,15 @@ export default class LeaderboardUtils {
       return acc + 0;
     }, 0);
 
-    if (homeOrAway === 'home') {
+    if (homeAwayOrAll === 'home') {
       return homeDraws;
+    } if (homeAwayOrAll === 'away') {
+      return awayDraws;
     }
-    return awayDraws;
+    return homeDraws + awayDraws;
   };
 
-  public calcHomeLosses = (teamObj:ILeaderboardTest, homeOrAway: string) => {
+  public calcHomeLosses = (teamObj:ILeaderboardTest, homeAwayOrAll: string) => {
     const homeLosses = teamObj.homeMatches.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals < curr.awayTeamGoals) { return acc + 1; }
       return acc + 0;
@@ -89,13 +95,15 @@ export default class LeaderboardUtils {
       if (curr.awayTeamGoals < curr.homeTeamGoals) { return acc + 1; }
       return acc + 0;
     }, 0);
-    if (homeOrAway === 'home') {
+    if (homeAwayOrAll === 'home') {
       return homeLosses;
+    } if (homeAwayOrAll === 'away') {
+      return awayLosses;
     }
-    return awayLosses;
+    return homeLosses + awayLosses;
   };
 
-  public calcGoalsFavor = (teamObj:ILeaderboardTest, homeOrAway: string):number => {
+  public calcGoalsFavor = (teamObj:ILeaderboardTest, homeAwayOrAll: string):number => {
     const totalGoalsFavor = teamObj.homeMatches
       .map((element:IMatchTest) => element.homeTeamGoals)
       .reduce((acc: number, curr: number) => acc + curr);
@@ -104,26 +112,30 @@ export default class LeaderboardUtils {
       .map((element:IMatchTest) => element.awayTeamGoals)
       .reduce((acc: number, curr: number) => acc + curr);
 
-    if (homeOrAway === 'home') {
+    if (homeAwayOrAll === 'home') {
       return totalGoalsFavor;
+    } if (homeAwayOrAll === 'away') {
+      return totalGoalsFavorAway;
     }
-    return totalGoalsFavorAway;
+    return totalGoalsFavor + totalGoalsFavorAway;
   };
 
-  public calcGoalsOwn = (teamObj:ILeaderboardTest, homeOrAway: string):number => {
+  public calcGoalsOwn = (teamObj:ILeaderboardTest, homeAwayOrAll: string):number => {
     const totalGoalsOwn = teamObj.homeMatches.map((element:IMatchTest) => element.awayTeamGoals)
       .reduce((acc: number, curr: number) => acc + curr);
 
     const totalGoalsOwnAway = teamObj.awayMatches.map((element:IMatchTest) => element.homeTeamGoals)
       .reduce((acc: number, curr: number) => acc + curr);
 
-    if (homeOrAway === 'home') {
+    if (homeAwayOrAll === 'home') {
       return totalGoalsOwn;
+    } if (homeAwayOrAll === 'away') {
+      return totalGoalsOwnAway;
     }
-    return totalGoalsOwnAway;
+    return totalGoalsOwn + totalGoalsOwnAway;
   };
 
-  public calcGoalsBalance = (teamObj:ILeaderboardTest, homeOrAway: string): number => {
+  public calcGoalsBalance = (teamObj:ILeaderboardTest, homeAwayOrAll: string): number => {
     const totalGoalsBalance = teamObj.homeMatches.map((element:IMatchTest) => element.homeTeamGoals)
       .reduce((acc: number, curr) => acc + curr)
       - teamObj.homeMatches.map((element:IMatchTest) => element.awayTeamGoals)
@@ -135,20 +147,28 @@ export default class LeaderboardUtils {
       - teamObj.awayMatches.map((element:IMatchTest) => element.homeTeamGoals)
         .reduce((acc: number, curr) => acc + curr);
 
-    if (homeOrAway === 'home') {
+    if (homeAwayOrAll === 'home') {
       return totalGoalsBalance;
+    } if (homeAwayOrAll === 'away') {
+      return totalGoalsBalanceAway;
     }
-    return totalGoalsBalanceAway;
+    return totalGoalsBalance + totalGoalsBalanceAway;
   };
 
-  public calcHomeEfficiency = (teamObj:ILeaderboardTest, homeOrAway: string): string => {
+  public calcHomeEfficiency = (teamObj:ILeaderboardTest, homeAwayOrAll: string): string => {
     let homeAwayObj = teamObj.homeMatches;
-    if (homeOrAway === 'away') {
+    if (homeAwayOrAll === 'away') {
       homeAwayObj = teamObj.awayMatches;
     }
-    const P = this.calcHomePoints(teamObj, homeOrAway);
+    const P = this.calcHomePoints(teamObj, homeAwayOrAll);
     const J = homeAwayObj.length;
     const homeEfficiency = ((P / (J * 3)) * 100).toFixed(2);
+    if (homeAwayOrAll === 'all') {
+      const P1 = this.calcHomePoints(teamObj, 'all');
+      const J1 = teamObj.awayMatches.length + teamObj.homeMatches.length;
+      const homeEfficiency1 = ((P1 / (J1 * 3)) * 100).toFixed(2);
+      return homeEfficiency1;
+    }
     return homeEfficiency;
   };
 }
