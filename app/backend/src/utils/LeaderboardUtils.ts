@@ -1,11 +1,13 @@
 import Team from '../database/models/team';
 import Match from '../database/models/match';
+import ILeaderboardTest from '../interfaces/ILeaderBoardTest';
+import IMatchTest from '../interfaces/IMatchTest';
 
 export default class LeaderboardUtils {
   public teamModel = Team;
   public matchModel = Match;
 
-  public getTeamsData = async (): Promise<any> => {
+  public getTeamsData = async (): Promise<ILeaderboardTest[]> => {
     const teams = await this.teamModel.findAll({
       include: [
         {
@@ -22,12 +24,12 @@ export default class LeaderboardUtils {
         },
       ],
     });
-    return teams;
+    return teams as unknown as ILeaderboardTest[];
   };
 
-  public calcHomePoints = (testObj:any) => {
+  public calcHomePoints = (testObj:ILeaderboardTest) => {
     const homeObj = testObj.homeMatches;
-    const homePoints = homeObj.reduce((acc: number, curr: any) => {
+    const homePoints = homeObj.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals > curr.awayTeamGoals) { return acc + 3; }
       if (curr.homeTeamGoals === curr.awayTeamGoals) { return acc + 1; }
       return acc + 0;
@@ -35,57 +37,57 @@ export default class LeaderboardUtils {
     return homePoints;
   };
 
-  public calcHomeVictories = (testObj:any) => {
+  public calcHomeVictories = (testObj:ILeaderboardTest) => {
     const homeObj = testObj.homeMatches;
-    const homeVictories = homeObj.reduce((acc: number, curr: any) => {
+    const homeVictories = homeObj.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals > curr.awayTeamGoals) { return acc + 1; }
       return acc + 0;
     }, 0);
     return homeVictories;
   };
 
-  public calcHomeDraws = (testObj:any) => {
+  public calcHomeDraws = (testObj:ILeaderboardTest) => {
     const homeObj = testObj.homeMatches;
-    const homeDraws = homeObj.reduce((acc: number, curr: any) => {
+    const homeDraws = homeObj.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals === curr.awayTeamGoals) { return acc + 1; }
       return acc + 0;
     }, 0);
     return homeDraws;
   };
 
-  public calcHomeLosses = (testObj:any) => {
+  public calcHomeLosses = (testObj:ILeaderboardTest) => {
     const homeObj = testObj.homeMatches;
-    const homeLosses = homeObj.reduce((acc: number, curr: any) => {
+    const homeLosses = homeObj.reduce((acc: number, curr) => {
       if (curr.homeTeamGoals < curr.awayTeamGoals) { return acc + 1; }
       return acc + 0;
     }, 0);
     return homeLosses;
   };
 
-  public calcGoalsFavor = (testObj:any):Promise<number> => {
+  public calcGoalsFavor = (testObj:ILeaderboardTest):number => {
     const homeObj = testObj.homeMatches;
-    const totalGoalsFavor = homeObj.map((element:any) => element.homeTeamGoals)
-      .reduce((acc: number, curr: any) => acc + curr);
+    const totalGoalsFavor = homeObj.map((element:IMatchTest) => element.homeTeamGoals)
+      .reduce((acc: number, curr: number) => acc + curr);
     return totalGoalsFavor;
   };
 
-  public calcGoalsOwn = (testObj:any):Promise<number> => {
+  public calcGoalsOwn = (testObj:ILeaderboardTest):number => {
     const homeObj = testObj.homeMatches;
-    const totalGoalsOwn = homeObj.map((element:any) => element.awayTeamGoals)
-      .reduce((acc: number, curr: any) => acc + curr);
+    const totalGoalsOwn = homeObj.map((element:IMatchTest) => element.awayTeamGoals)
+      .reduce((acc: number, curr: number) => acc + curr);
     return totalGoalsOwn;
   };
 
-  public calcGoalsBalance = (testObj:any) => {
+  public calcGoalsBalance = (testObj:ILeaderboardTest): number => {
     const homeObj = testObj.homeMatches;
-    const totalGoalsBalance = homeObj.map((element:any) => element.homeTeamGoals)
-      .reduce((acc: number, curr: any) => acc + curr)
-      - homeObj.map((element:any) => element.awayTeamGoals)
-        .reduce((acc: number, curr: any) => acc + curr);
+    const totalGoalsBalance = homeObj.map((element:IMatchTest) => element.homeTeamGoals)
+      .reduce((acc: number, curr) => acc + curr)
+      - homeObj.map((element:IMatchTest) => element.awayTeamGoals)
+        .reduce((acc: number, curr) => acc + curr);
     return totalGoalsBalance;
   };
 
-  public calcHomeEfficiency = (testObj:any) => {
+  public calcHomeEfficiency = (testObj:ILeaderboardTest): string => {
     const homeObj = testObj.homeMatches;
     const P = this.calcHomePoints(testObj);
     const J = homeObj.length;
