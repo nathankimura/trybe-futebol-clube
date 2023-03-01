@@ -19,8 +19,8 @@ export default class TeamController {
     return res.status(200).json(teams);
   };
 
-  public getTeamsTest = async (_req: Request, res: Response): Promise<Response> => {
+/*   public getTeamsTest = async (_req: Request, res: Response): Promise<Response> => {
     const teams = await this.leaderboardService.getTeamsTest();
     return res.status(200).json(teams);
-  };
+  }; */
 }

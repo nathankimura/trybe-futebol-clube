@@ -8,8 +8,8 @@ export default class TeamService {
     return teams;
   };
 
-  public getTeamsTest = async () => {
+/*   public getTeamsTest = async () => {
     const teams = await this.leaderboardModel.getTeamsTest();
     return teams;
-  };
+  }; */
 }
