@@ -7,7 +7,7 @@ Neste projeto, uma aplicação front-end foi fornecida pela _[Trybe](https://www
 
 ## Layout web
 
-![Trybe Futebol CLube]()
+![Trybe Futebol CLube](assets/front-example.png)
 
 # Tecnologias utilizadas
 ## Back end
@@ -35,6 +35,8 @@ cd trybe-futebol-clube
 npm run compose:up
 npm run compose:down // para parar a aplicação
 ```
+Após executar os comandos acima, o front do projeto fica disponível para visualização no endereço http://localhost:3000
+
 ### Endpoints
 
 #### Login
