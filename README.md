@@ -1,5 +1,4 @@
 # Trybe Futebol Clube
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
 
 # Sobre o projeto
 
@@ -7,7 +6,7 @@ Neste projeto, uma aplicação front-end foi fornecida pela _[Trybe](https://www
 
 ## Layout web
 
-![Trybe Futebol CLube](assets/front-example.png)
+![Trybe Futebol CLube](assets/front-image.png)
 
 # Tecnologias utilizadas
 ## Back end
@@ -35,7 +34,7 @@ cd trybe-futebol-clube
 npm run compose:up
 npm run compose:down // para parar a aplicação
 ```
-Após executar os comandos acima, o front do projeto fica disponível para visualização no endereço http://localhost:3000
+Após executar os comandos acima, o front do projeto fica disponível para visualização no endereço http://localhost:3000 da sua máquina local.
 
 ### Endpoints
 
