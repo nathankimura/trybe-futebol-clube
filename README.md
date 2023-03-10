@@ -21,7 +21,7 @@ Neste projeto, uma aplicação front-end foi fornecida pela _[Trybe](https://www
 # Como executar o projeto
 
 ## Back end
-Pré-requisitos: npm / docker
+Pré-requisitos: npm / docker rodando
 
 ```bash
 # clonar repositório
@@ -30,9 +30,10 @@ git clone git@github.com:nathankimura/trybe-futebol-clube.git
 # entrar na pasta do projeto back end
 cd trybe-futebol-clube
 
-# executar o projeto
-npm run compose:up
-npm run compose:down // para parar a aplicação
+# executar o projeto tanto no ubuntu quanto no windows com wsl
+cd app // para entrar na pasta app, onde se encontra o arquivo docker-compose.yml
+docker-compose up -d --build // para iniciar aplicação
+docker-compose down --remove-orphans // para parar a aplicação 
 ```
 Após executar os comandos acima, o front do projeto fica disponível para visualização no endereço http://localhost:3000 da sua máquina local.
 
@@ -107,4 +108,4 @@ No body da requisição PATCH para atualizar os gols realizados é necessário i
 
 Nathan Kimura Maciel
 
-https://www.linkedin.com/in/nathan-kimura-03274b240/
+https://www.linkedin.com/in/nathan-kimura/
