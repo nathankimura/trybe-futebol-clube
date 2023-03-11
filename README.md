@@ -27,7 +27,7 @@ Pré-requisitos: npm / docker rodando
 # clonar repositório
 git clone git@github.com:nathankimura/trybe-futebol-clube.git
 
-# entrar na pasta do projeto back end
+# entrar na pasta do projeto
 cd trybe-futebol-clube
 
 # executar o projeto tanto no ubuntu quanto no windows com wsl
